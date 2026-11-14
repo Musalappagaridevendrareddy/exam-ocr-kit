@@ -146,7 +146,9 @@ if (Test-Path $report) { New-Item -ItemType Directory -Force $stage | Out-Null; 
 Copy-Item $logs (Join-Path $stage 'logs') -Recurse -Force
 $zip = Join-Path $root "results_$Mode.zip"
 if (Test-Path $zip) { Remove-Item $zip }
-& "$env:SystemRoot\System32\tar.exe" -a -cf $zip -C $stage .
+# Name the entries: a zip whose paths start with './' looks empty in Windows Explorer.
+$items = @(Get-ChildItem $stage -Name)
+& "$env:SystemRoot\System32\tar.exe" -a -cf $zip -C $stage @items
 if ($LASTEXITCODE -ne 0) { throw 'Could not write the results zip' }
 Remove-Item $stage -Recurse -Force
 
