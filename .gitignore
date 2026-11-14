@@ -1,0 +1,12 @@
+.venv/
+tools/
+models/
+logs/
+results_*/
+results_*.zip
+download_report.json
+*.part
+backend/data/raw_papers/**/*.pdf
+backend/data/raw_papers/**/*.ocr*.txt
+backend/data/raw_papers/ocr_vlm_report.csv
+__pycache__/
