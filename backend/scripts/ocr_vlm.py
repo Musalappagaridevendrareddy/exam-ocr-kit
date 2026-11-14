@@ -26,6 +26,7 @@ import csv
 import re
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import List
 
@@ -98,13 +99,20 @@ def ocr_file(rel: str, args) -> dict | None:
     doc = fitz.open(pdf)
     try:
         pages = page_numbers(args.pages, doc.page_count)
-        texts, started = [], time.time()
-        for n in pages:
-            png = doc[n].get_pixmap(dpi=args.dpi).tobytes("png")
-            texts.append(ocr_page(png, args))
-            print(f"    page {n + 1}/{doc.page_count}: {len(texts[-1])} chars", flush=True)
+        total, started = doc.page_count, time.time()
+        pngs = [doc[n].get_pixmap(dpi=args.dpi).tobytes("png") for n in pages]
     finally:
         doc.close()
+
+    def one(job):
+        n, png = job
+        text = ocr_page(png, args)
+        print(f"    page {n + 1}/{total}: {len(text)} chars", flush=True)
+        return text
+
+    # map() keeps page order whatever order the server answers in.
+    with ThreadPoolExecutor(max_workers=max(1, args.parallel)) as pool:
+        texts = list(pool.map(one, zip(pages, pngs)))
 
     # Written only when every page succeeded: a partial sidecar would read as
     # the whole paper and hide the failure.
@@ -130,6 +138,8 @@ def main() -> int:
     ap.add_argument("--dpi", type=int, default=150, help="raise to 200 if small print is misread")
     ap.add_argument("--max-tokens", type=int, default=6000)
     ap.add_argument("--timeout", type=int, default=600)
+    ap.add_argument("--parallel", type=int, default=1,
+                    help="pages sent to the server at once (the server needs as many slots)")
     ap.add_argument("--prompt", default=PROMPT, help="some OCR models want their own short prompt")
     ap.add_argument("--force", action="store_true", help="redo files that already have output")
     args = ap.parse_args()

@@ -19,6 +19,7 @@ param(
     [int]$Port = 1234,
     [int]$GpuLayers = 99,
     [int]$TimeoutSeconds = 900,
+    [int]$Parallel = 1,
     [string]$CustomList = ''
 )
 $ErrorActionPreference = 'Stop'
@@ -109,7 +110,7 @@ foreach ($name in $Models) {
     Get-File "https://huggingface.co/$repo/resolve/main/$modelFile" (Join-Path $dir $modelFile)
     Get-File "https://huggingface.co/$repo/resolve/main/$visionFile" (Join-Path $dir $visionFile)
 
-    $serverArgs = "-m `"$(Join-Path $dir $modelFile)`" --mmproj `"$(Join-Path $dir $visionFile)`" --port $Port --host 127.0.0.1 -ngl $GpuLayers -c 16384 --alias $name"
+    $serverArgs = "-m `"$(Join-Path $dir $modelFile)`" --mmproj `"$(Join-Path $dir $visionFile)`" --port $Port --host 127.0.0.1 -ngl $GpuLayers -c $(16384 * $Parallel) -np $Parallel --alias $name"
     $proc = Start-Process $server.FullName -ArgumentList $serverArgs -PassThru -WindowStyle Hidden `
         -RedirectStandardOutput (Join-Path $logs "server-$name.out.log") -RedirectStandardError (Join-Path $logs "server-$name.err.log")
     try {
@@ -122,7 +123,7 @@ foreach ($name in $Models) {
         if (-not $up) { throw "The model server did not start. See logs\server-$name.err.log" }
 
         Write-Host "[4/4] OCR with '$name' ($Mode)"
-        $ocrArgs = @((Join-Path $backendDir 'scripts\ocr_vlm.py'), '--list', $listFile, '--model', $name, '--api-url', "http://127.0.0.1:$Port/v1", '--dpi', $Dpi, '--timeout', $TimeoutSeconds)
+        $ocrArgs = @((Join-Path $backendDir 'scripts\ocr_vlm.py'), '--list', $listFile, '--model', $name, '--api-url', "http://127.0.0.1:$Port/v1", '--dpi', $Dpi, '--timeout', $TimeoutSeconds, '--parallel', $Parallel)
         if ($Mode -eq 'sample') { $ocrArgs += @('--pages', $Pages, '--tag', $name) }
         & $py @ocrArgs
         if ($LASTEXITCODE -ne 0) { $failed += $name }
