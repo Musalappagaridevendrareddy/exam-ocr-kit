@@ -10,3 +10,4 @@ backend/data/raw_papers/**/*.pdf
 backend/data/raw_papers/**/*.ocr*.txt
 backend/data/raw_papers/ocr_vlm_report.csv
 __pycache__/
+backend/data/_part/

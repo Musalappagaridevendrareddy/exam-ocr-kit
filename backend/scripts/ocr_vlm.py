@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import base64
 import csv
+import os
 import re
 import sys
 import threading
@@ -38,6 +39,13 @@ BACKEND = Path(__file__).resolve().parent.parent
 RAW_DIR = BACKEND / "data" / "raw_papers"
 REPORT = RAW_DIR / "ocr_vlm_report.csv"
 PAGE_BREAK = "\f"
+
+
+def long_path(p: Path) -> str:
+    """Windows refuses paths over 260 characters unless they carry the \\\\?\\ prefix."""
+    s = str(p.resolve())
+    return "\\\\?\\" + s if os.name == "nt" and not s.startswith("\\\\?\\") else s
+
 
 PROMPT = (
     "Transcribe this exam paper page exactly as printed. "
@@ -132,13 +140,18 @@ def ocr_file(rel: str, args) -> dict | None:
     pdf = RAW_DIR / rel
     suffix = f".ocr.{args.tag}.txt" if args.tag else ".ocr.txt"
     out = pdf.with_suffix(pdf.suffix + suffix)
-    if out.exists() and out.stat().st_size > 0 and not args.force:
+    if os.path.exists(long_path(out)) and os.path.getsize(long_path(out)) > 0 and not args.force:
         print(f"  have  {rel}")
         return None
 
-    doc = fitz.open(pdf)
+    if not os.path.exists(long_path(pdf)):
+        raise FileNotFoundError(f"no such file: '{pdf}'")
+    with open(long_path(pdf), "rb") as fh:
+        doc = fitz.open(stream=fh.read(), filetype="pdf")
     try:
         pages = page_numbers(args.pages, doc.page_count)
+        if not pages:
+            raise ValueError("the PDF has no readable pages (damaged file)")
         total, started = doc.page_count, time.time()
         pngs = [doc[n].get_pixmap(dpi=args.dpi).tobytes("png") for n in pages]
     finally:
@@ -157,7 +170,8 @@ def ocr_file(rel: str, args) -> dict | None:
     # Written only when every page succeeded: a partial sidecar would read as
     # the whole paper and hide the failure.
     text = PAGE_BREAK.join(texts)
-    out.write_text(text, encoding="utf-8")
+    with open(long_path(out), "w", encoding="utf-8") as fh:
+        fh.write(text)
     q, o = structure_counts("\n".join(texts))
     return {
         "file": rel, "tag": args.tag or "", "model": args.model, "pages": len(pages),

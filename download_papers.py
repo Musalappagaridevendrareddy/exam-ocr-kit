@@ -25,6 +25,7 @@ from urllib.parse import quote, urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parent
 RAW = ROOT / "backend" / "data" / "raw_papers"
+PART_DIR = ROOT / "backend" / "data" / "_part"
 # Windows' own curl validates certificates against the Windows store and
 # completes the partial chains many government sites serve.
 CURL = os.path.join(os.environ.get("SystemRoot", r"C:\Windows"), "System32", "curl.exe")
@@ -38,10 +39,19 @@ def safe_url(url: str) -> str:
     return urlunsplit((p.scheme, p.netloc, quote(p.path, safe="/%"), quote(p.query, safe="=&%"), ""))
 
 
+def long_path(p: Path) -> str:
+    """Windows refuses paths over 260 characters unless they carry the \\\\?\\ prefix."""
+    s = str(p.resolve())
+    return "\\\\?\\" + s if os.name == "nt" and not s.startswith("\\\\?\\") else s
+
+
 def fetch(url: str, dest: Path) -> str | None:
     """Download one file. Returns None on success, else the reason."""
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    tmp = dest.with_name(dest.name + ".part")
+    os.makedirs(long_path(dest.parent), exist_ok=True)
+    # Download under a short name first; some paper names are long enough to
+    # push the full path past Windows' limit.
+    PART_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = PART_DIR / (hashlib.sha1(str(dest).encode()).hexdigest()[:16] + ".part")
     r = subprocess.run(
         [CURL, "-sS", "-L", "--fail", "--max-time", "180", "-A", UA, "-o", str(tmp), safe_url(url)],
         capture_output=True, text=True)
@@ -57,10 +67,12 @@ def fetch(url: str, dest: Path) -> str | None:
             tmp.unlink(missing_ok=True)
             return f"{why}; then {type(e).__name__}: {str(e)[:100]}"
     with tmp.open("rb") as fh:
-        if fh.read(5) != b"%PDF-":
-            tmp.unlink(missing_ok=True)
-            return "not a PDF (the site returned a web page)"
-    tmp.replace(dest)
+        head = fh.read(5)
+    # Checked after the file is closed: Windows cannot delete an open file.
+    if head != b"%PDF-":
+        tmp.unlink(missing_ok=True)
+        return "not a PDF (the site returned a web page)"
+    os.replace(tmp, long_path(dest))
     return None
 
 
@@ -70,7 +82,7 @@ def main() -> int:
     args = ap.parse_args()
 
     entries = json.loads((ROOT / "papers.json").read_text(encoding="utf-8"))
-    todo = [e for e in entries if not (RAW / e["path"]).exists()]
+    todo = [e for e in entries if not os.path.exists(long_path(RAW / e["path"]))]
     print(f"{len(entries)} papers listed, {len(entries) - len(todo)} already here, {len(todo)} to fetch")
     if args.limit:
         todo = todo[: args.limit]
@@ -82,14 +94,19 @@ def main() -> int:
         wait = PER_HOST_GAP - (time.time() - last.get(host, 0))
         if wait > 0:
             time.sleep(wait)
-        reason = fetch(e["url"], RAW / e["path"])
+        try:
+            reason = fetch(e["url"], RAW / e["path"])
+        except Exception as err:  # one bad file must not stop a 2,000-file download
+            reason = f"{type(err).__name__}: {str(err)[:120]}"
         last[host] = time.time()
         if reason:
             failed.append({"path": e["path"], "url": e["url"], "reason": reason})
             print(f"[{i}/{len(todo)}] FAIL {e['path']}: {reason}", flush=True)
             continue
         ok += 1
-        if e.get("sha256") and hashlib.sha256((RAW / e["path"]).read_bytes()).hexdigest() != e["sha256"]:
+        with open(long_path(RAW / e["path"]), "rb") as fh:
+            digest = hashlib.sha256(fh.read()).hexdigest()
+        if e.get("sha256") and digest != e["sha256"]:
             changed += 1  # the site replaced the file since collection; still a PDF, so it is kept
         if i % 25 == 0 or i == len(todo):
             print(f"[{i}/{len(todo)}] {ok} fetched, {len(failed)} failed", flush=True)
