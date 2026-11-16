@@ -49,3 +49,124 @@ backend/data/raw_papers/kerala-vea/2026/080-2026-M-A.pdf
 backend/data/raw_papers/telangana-forest-beat-officer/2023/10AFA-QP-GS20230121163254.pdf
 backend/data/raw_papers/upsc-cse/2026/QP_CGSPE26_Chem_II_09022026.pdf
 backend/data/raw_papers/upsc-cse/2026/QP_CGSPE26_GenStud_I_09022026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_English_05-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_Home_Science.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_Maths_merged.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_Music_Vocal.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_SOS_Sept_2026_compressed.pdf
+backend/data/raw_papers/hp-tet/2026/paper/10th_Social_Science_merged.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12TH_Chemistry_SOS_Direct_Sci_Stream.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12TH_Physics_merged.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Business_Std_1_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Chemistry_merged.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Economics_07-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Englsih_06-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Geography_E-_Series_1_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_HEFS.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Hindi_1__12-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_History_E-Series.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_History_merged.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Political_Science.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_SOS_Sept_2026_compressed.pdf
+backend/data/raw_papers/hp-tet/2026/paper/12th_Sanskrit_05-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/8th_SOS_Sept_2026_compressed.pdf
+backend/data/raw_papers/hp-tet/2026/paper/ART-A.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Answer_key_10th_july_2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Answer_key_12th_July_2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Bio_13-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Computer_Science.pdf
+backend/data/raw_papers/hp-tet/2026/paper/D.EL.ED_ENTRANCE_ANSWERKEYS_06-07-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/EMRSST-2026_Answer_Keys_08-05-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Element_of_Book_Keeping.pdf
+backend/data/raw_papers/hp-tet/2026/paper/FINAL_ANS_KEY_TET_JUNE_2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Final_Answer_Key_Matriculation_July-26.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Final_Answser_Key_Plus_two_July-26.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Final__Letter_3rd_5th_8th_01-12-2025.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Geo.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Math_Eseries_11-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/MatricSOS_Sep-26.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Middle_SOSSep_26.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Music_Instrumental__17-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/NSQF_23-03-2026_compressed.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Acct.16.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Bio.16.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.D.31.07.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.MI.02.04.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.MV.02.04.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.P.K.20.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.P.Key.10.04.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.P.Key.Arts.11.07.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.P.Key.D.El.Ed.11.07.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.P.Key.Non.Med.11.07.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Pjbi.23.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Prov.02.05.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Psycho.16.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.SMC.21.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.SOS.D.23.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Scien.16.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.Sskt.23.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Noti.U.23.03.2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Notification_TET_Provisional_Answer_key_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Plustwo_SOS_Sep_26.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Public_admin_11-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/SOS_PHYSICS_DIRECT_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Science_10th_17-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Social_sci.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Sociology__10-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Spcial_Edu_VI_to_XII_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Special_Edu_Pre_Primary_to_Vth_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/TET_Punjabi_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/TET_TGT_Hindi_June-2026_compressed.pdf
+backend/data/raw_papers/hp-tet/2026/paper/TET_TGT_Medical_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/TET_TGT_Sanskrit_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/TET_Urdu_June-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/Urdu_13-03-2026.pdf
+backend/data/raw_papers/hp-tet/2026/paper/cbse_answerkey.pdf
+backend/data/raw_papers/hp-tet/2026/paper/eco.pdf
+backend/data/raw_papers/hp-tet/2026/paper/ilovepdf_merged_3_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/ilovepdf_merged_5_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/ilovepdf_merged_6_.pdf
+backend/data/raw_papers/hp-tet/2026/paper/ilovepdf_merged_7_.pdf
+backend/data/raw_papers/jharkhand-judicial-service/2011/JPSC Annual Report (2011-12).pdf
+backend/data/raw_papers/jharkhand-judicial-service/2013/JPSC Annual Report (2013-14).pdf
+backend/data/raw_papers/jharkhand-judicial-service/2014/JPSC Annual Report (2014-15).pdf
+backend/data/raw_papers/jharkhand-judicial-service/2016/JPSC Annual Report (2016-17).pdf
+backend/data/raw_papers/jharkhand-judicial-service/2023/jharkhand%20gazette_29_11_2023.pdf
+backend/data/raw_papers/jharkhand-judicial-service/unknown/Online Application System.pdf
+backend/data/raw_papers/jharkhand-judicial-service/unknown/RTI Related Information-60 Days.pdf
+backend/data/raw_papers/ptet/2011/TETGuidelines11.02.2011.pdf
+backend/data/raw_papers/ptet/2024/PressNoteRegardingPSTET2024AnswerKey&Grievance Portal.pdf
+backend/data/raw_papers/ptet/unknown/Adv.pdf
+backend/data/raw_papers/ptet/unknown/FeeStructure.pdf
+backend/data/raw_papers/ptet/unknown/Guidelines-for-PSTET.pdf
+backend/data/raw_papers/ptet/unknown/KeyDates.pdf
+backend/data/raw_papers/puducherry-tet/2026/Conductress RR Comments.pdf
+backend/data/raw_papers/puducherry-tet/2026/HM Gr II Transfer counseling 2026.pdf
+backend/data/raw_papers/puducherry-tet/2026/HM Primary Transfer Counselling 2026.pdf
+backend/data/raw_papers/puducherry-tet/2026/ICC Portal Login.pdf
+backend/data/raw_papers/puducherry-tet/2026/IGOT onboarding.pdf
+backend/data/raw_papers/puducherry-tet/2026/Instructor RR Comments.pdf
+backend/data/raw_papers/puducherry-tet/2026/Lecturer Transfer counseling 2026.pdf
+backend/data/raw_papers/puducherry-tet/2026/Lecturer counselling - Reschedule.pdf
+backend/data/raw_papers/puducherry-tet/2026/PST DEL 1-381 kkl.pdf
+backend/data/raw_papers/puducherry-tet/2026/PST DEL 922-1053 pdy.pdf
+backend/data/raw_papers/puducherry-tet/2026/Scholarship-obc-2627.pdf
+backend/data/raw_papers/puducherry-tet/2026/TET Qualification.pdf
+backend/data/raw_papers/puducherry-tet/2026/TGT Counselling.pdf
+backend/data/raw_papers/puducherry-tet/2026/igot-vigil-cc-callfor.pdf
+backend/data/raw_papers/puducherry-tet/unknown/HM Gr I.pdf
+backend/data/raw_papers/puducherry-tet/unknown/HM Gr.II.pdf
+backend/data/raw_papers/puducherry-tet/unknown/Sparing-VP.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/11Managers_QP_CS&IT20230121163409.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/12Managers_QP-CIVIL20230121163524.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/14Managers_QP-ELECTRICAL20230121163728.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/15Managers_QP-GS20230121163836.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/16Managers_QP-MECH20230121163937.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/22TPBO-GS-QP20230121164726.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/23TPBO-PAPER-2-QP20230121164828.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/3AE-CIVIL-QP20230121161153.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/4AE-GS-QP20230121161318.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/5AE-MECH-QP20230121161446.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/8AEE-MECH-QP20230121163044.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2023/9AFA-QP-COMMERCE20230121163153.pdf
+backend/data/raw_papers/telangana-forest-beat-officer/2036/6AEE-CIVIL-QP20230121162036.pdf
