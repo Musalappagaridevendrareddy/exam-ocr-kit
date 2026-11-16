@@ -13,7 +13,7 @@ SAMPLE RUN (do this first)
 3. When it says "Done", send back the file results_sample.zip.
 
 FULL RUN (later, after a model is chosen)
-   RUN.cmd -Mode full -Models dots -Parallel 4
+   RUN.cmd -Mode full -Models dots
 It first downloads the scanned papers (about 8 GB, resumable), then reads them
 all. Send back results_full.zip. If it is interrupted, run the same command
 again: finished papers are skipped.
