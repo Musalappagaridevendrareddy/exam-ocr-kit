@@ -25,6 +25,7 @@ import base64
 import csv
 import re
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -84,8 +85,47 @@ def ocr_page(png: bytes, args) -> str:
     if choice.get("finish_reason") == "length":
         # A cut-off page silently loses its last questions; refuse it instead.
         tail = (choice["message"]["content"] or "")[-160:].replace("\n", " | ")
-        raise ValueError(f"page hit max_tokens (model looping, or raise --max-tokens); it ended: ...{tail}")
+        raise PageCutOff(f"page hit max_tokens (model looping, or raise --max-tokens); it ended: ...{tail}")
     return (choice["message"]["content"] or "").replace(PAGE_BREAK, " ").strip()
+
+
+class PageCutOff(ValueError):
+    """The model ran to the token limit on this image (usually a loop on a dense table)."""
+
+
+_PIX_LOCK = threading.Lock()  # MuPDF is not thread-safe
+
+
+def split_png(png: bytes) -> tuple[bytes, bytes]:
+    """Cut a page image in two at the emptiest row near the middle, so no line of text is sliced."""
+    with _PIX_LOCK:
+        pix = fitz.Pixmap(png)
+        stride, data = pix.stride, pix.samples
+        lo, hi = int(pix.height * 0.4), int(pix.height * 0.6)
+        # The whitest row has the largest byte sum.
+        cut = max(range(lo, hi), key=lambda y: sum(data[y * stride:(y + 1) * stride]))
+        halves = []
+        for y0, y1 in ((0, cut), (cut, pix.height)):
+            rect = fitz.IRect(0, y0, pix.width, y1)
+            part = fitz.Pixmap(pix.colorspace, rect, pix.alpha)
+            part.copy(pix, rect)
+            halves.append(part.tobytes("png"))
+        return halves[0], halves[1]
+
+
+def ocr_image(png: bytes, args, depth: int = 0) -> str:
+    """
+    One page image to text. A page the model cannot finish is retried as two
+    half-pages (then quarters): the same model with less to read at once, which
+    is what stops it looping on a dense answer-key table.
+    """
+    try:
+        return ocr_page(png, args)
+    except PageCutOff:
+        if depth >= args.max_split:
+            raise
+        top, bottom = split_png(png)
+        return ocr_image(top, args, depth + 1) + "\n" + ocr_image(bottom, args, depth + 1)
 
 
 def ocr_file(rel: str, args) -> dict | None:
@@ -106,7 +146,7 @@ def ocr_file(rel: str, args) -> dict | None:
 
     def one(job):
         n, png = job
-        text = ocr_page(png, args)
+        text = ocr_image(png, args)
         print(f"    page {n + 1}/{total}: {len(text)} chars", flush=True)
         return text
 
@@ -138,6 +178,8 @@ def main() -> int:
     ap.add_argument("--dpi", type=int, default=150, help="raise to 200 if small print is misread")
     ap.add_argument("--max-tokens", type=int, default=6000)
     ap.add_argument("--timeout", type=int, default=600)
+    ap.add_argument("--max-split", type=int, default=2,
+                    help="times a page that hits the token limit is halved and retried (2 = down to quarters)")
     ap.add_argument("--parallel", type=int, default=1,
                     help="pages sent to the server at once (the server needs as many slots)")
     ap.add_argument("--prompt", default=PROMPT, help="some OCR models want their own short prompt")
