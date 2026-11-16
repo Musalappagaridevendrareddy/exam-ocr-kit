@@ -18,7 +18,7 @@ param(
     [int]$Dpi = 150,
     [int]$Port = 1234,
     [int]$GpuLayers = 99,
-    [int]$TimeoutSeconds = 900,
+    [int]$TimeoutSeconds = 1800,
     [int]$Parallel = 1,
     [string]$CustomList = ''
 )
@@ -110,7 +110,7 @@ foreach ($name in $Models) {
     Get-File "https://huggingface.co/$repo/resolve/main/$modelFile" (Join-Path $dir $modelFile)
     Get-File "https://huggingface.co/$repo/resolve/main/$visionFile" (Join-Path $dir $visionFile)
 
-    $serverArgs = "-m `"$(Join-Path $dir $modelFile)`" --mmproj `"$(Join-Path $dir $visionFile)`" --port $Port --host 127.0.0.1 -ngl $GpuLayers -c $(16384 * $Parallel) -np $Parallel --alias $name"
+    $serverArgs = "-m `"$(Join-Path $dir $modelFile)`" --mmproj `"$(Join-Path $dir $visionFile)`" --port $Port --host 127.0.0.1 -ngl $GpuLayers -c $(32768 * $Parallel) -np $Parallel --alias $name"
     $proc = Start-Process $server.FullName -ArgumentList $serverArgs -PassThru -WindowStyle Hidden `
         -RedirectStandardOutput (Join-Path $logs "server-$name.out.log") -RedirectStandardError (Join-Path $logs "server-$name.err.log")
     try {

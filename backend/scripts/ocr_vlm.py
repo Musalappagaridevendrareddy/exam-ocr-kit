@@ -176,7 +176,9 @@ def main() -> int:
     ap.add_argument("--pages", help="e.g. 1-5; needs --tag, a partial real sidecar is never written")
     ap.add_argument("--api-url", default="http://localhost:1234/v1")
     ap.add_argument("--dpi", type=int, default=150, help="raise to 200 if small print is misread")
-    ap.add_argument("--max-tokens", type=int, default=6000)
+    # A 16-version answer-key sheet is ~1,900 table cells, about 12,000 tokens of
+    # honest output; 6000 cut those off and looked like a loop.
+    ap.add_argument("--max-tokens", type=int, default=14000)
     ap.add_argument("--timeout", type=int, default=600)
     ap.add_argument("--max-split", type=int, default=2,
                     help="times a page that hits the token limit is halved and retried (2 = down to quarters)")
@@ -187,6 +189,8 @@ def main() -> int:
     args = ap.parse_args()
     if args.pages and not args.tag:
         ap.error("--pages needs --tag")
+    print(f"ocr_vlm version 2026-11-16b: max_tokens {args.max_tokens}, "
+          f"half-page retry x{args.max_split}, parallel {args.parallel}", flush=True)
 
     files = [args.file] if args.file else [
         ln.strip() for ln in Path(args.list).read_text(encoding="utf-8").splitlines() if ln.strip()]
